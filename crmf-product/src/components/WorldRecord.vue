@@ -2,6 +2,12 @@
 	<div class="records">
 		<h1>title</h1>
 		<p>This is world record section.</p>
+
+		<div v-for="data in globalData" :key="data.key">
+			{{ data.key }}
+			{{ data.value }}
+		</div>
+
 		<CountryRank v-bind:country-data="CountryData" />
 	</div>
 </template>
@@ -20,27 +26,66 @@ data: function () {
 components: {
 	CountryRank
 },
-mounted: function () {
+mounted: function (): void {
 		interface GlobalData {
-			NewConfirmed: number;
-			TotalConfirmed: number;
-			NewDeaths: number;
-			TotalDeaths: number;
-			NewRecovered: number;
-			TotalRecovered: number;
+			one: {
+				key: string;
+				value: number;
+			},
+			two: {
+				key: string;
+				value: number;
+			},
+			three: {
+				key: string;
+				value: number;
+			},
+			four: {
+				key: string;
+				value: number;
+			},
+			five: {
+				key: string;
+				value: number;
+			},
+			six: {
+				key: string;
+				value: number;
+			}
 		}
 		interface CountryData {
 			Countries: Array<string>;
 		}
-		this.axios.get('https://api.covid19api.com/summary')
+
+		this.axios.get('https://api.covid19api.com/summary', {
+			headers: { 'x-access-token': `fe31d8e4-04d5-4c22-bbc8-05ac57330264` }
+		})
 		.then((response) => {
-			const mainData: GlobalData = {
-			NewConfirmed: response.data.Global.NewConfirmed,
-			TotalConfirmed: response.data.Global.TotalConfirmed,
-			NewDeaths: response.data.Global.NewDeaths,
-			TotalDeaths: response.data.Global.TotalDeaths,
-			NewRecovered: response.data.Global.NewRecovered,
-			TotalRecovered: response.data.Global.TotalRecovered
+			const mainData = {
+				one: {
+					key: 'NewConfirmed',
+					value: response.data.Global.NewConfirmed
+				},
+				two: {
+					key: 'TotalConfirmed',
+					value: response.data.Global.TotalConfirmed
+				},
+				three: {
+					key: 'NewDeaths',
+					value: response.data.Global.NewDeaths
+				},
+				four: {
+					key: 'TotalDeaths',
+					value: response.data.Global.TotalDeaths
+				},
+				five: {
+					key: 'NewRecovered',
+					value: response.data.Global.NewRecovered
+				},
+				six: {
+					key: 'TotalRecovered',
+					value: response.data.Global.TotalRecovered
+				}
 			}
 
 			this.globalData = mainData
@@ -50,12 +95,12 @@ mounted: function () {
 				Countries: response.data.Countries
 			}
 			this.CountryData = propsData
-			console.log(this.CountryData)
 		})
 		.catch((e) => {
 			console.log(e)
 		})
 	}
+
 })
 
 </script>

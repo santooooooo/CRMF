@@ -54,14 +54,14 @@ mounted: function (): void {
 			}
 		}
 		interface CountryData {
-			Countries: Array<string>;
+			Countries: any;
 		}
 
 		this.axios.get('https://api.covid19api.com/summary', {
 			headers: { 'x-access-token': `` }
 		})
 		.then((response) => {
-			const mainData = {
+			const mainData: GlobalData = {
 				one: {
 					key: 'NewConfirmed',
 					value: response.data.Global.NewConfirmed
@@ -89,11 +89,8 @@ mounted: function (): void {
 			}
 
 			this.globalData = mainData
-			console.log(this.globalData)
 
-			const propsData: CountryData = {
-				Countries: response.data.Countries
-			}
+			const propsData = response.data.Countries
 			this.CountryData = propsData
 		})
 		.catch((e) => {

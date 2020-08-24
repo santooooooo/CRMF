@@ -18,6 +18,7 @@ module.exports = {
 	  "no-tabs": 0,
 	  "indent": 0,
 	  "quotes": 0,
+	  "spaced-comment": 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   },

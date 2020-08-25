@@ -8,7 +8,7 @@
 			{{ data.value }}
 		</div>
 
-		<CountryRank v-bind:country-data="CountryData" />
+		<CountryRank />
 	</div>
 </template>
 
@@ -19,8 +19,7 @@ import CountryRank from './CountryRank.vue'
 export default Vue.extend({
 data: function () {
 	return {
-		globalData: {},
-		CountryData: {}
+		globalData: {}
 	}
 },
 components: {
@@ -52,9 +51,6 @@ mounted: function (): void {
 				key: string;
 				value: number;
 			}
-		}
-		interface CountryData {
-			Countries: any;
 		}
 
 		this.axios.get('https://api.covid19api.com/summary', {
@@ -89,9 +85,6 @@ mounted: function (): void {
 			}
 
 			this.globalData = mainData
-
-			const propsData = response.data.Countries
-			this.CountryData = propsData
 		})
 		.catch((e) => {
 			console.log(e)

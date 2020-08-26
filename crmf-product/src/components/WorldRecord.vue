@@ -8,13 +8,33 @@
 			{{ data.value }}
 		</div>
 
-		<CountryRank />
+		<router-link to="/rank">Rank</router-link>
+		<router-link to="/search">Search</router-link>
+
+		<router-view></router-view>
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import CountryRank from './CountryRank.vue'
+import SearchData from './SearchData.vue'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+	routes: [
+		{
+			path: '/rank',
+			component: CountryRank
+		},
+		{
+			path: '/search',
+			component: SearchData
+		}
+	]
+})
 
 export default Vue.extend({
 data: function () {
@@ -22,9 +42,7 @@ data: function () {
 		globalData: {}
 	}
 },
-components: {
-	CountryRank
-},
+router: router,
 mounted: function (): void {
 		interface GlobalData {
 			one: {
@@ -54,7 +72,7 @@ mounted: function (): void {
 		}
 
 		this.axios.get('https://api.covid19api.com/summary', {
-			headers: { 'x-access-token': `` }
+			headers: { 'x-access-token': `fe31d8e4-04d5-4c22-bbc8-05ac57330264` }
 		})
 		.then((response) => {
 			const mainData: GlobalData = {

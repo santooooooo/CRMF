@@ -7,7 +7,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import WorldRecord from './components/WorldRecord.vue'
+
+Vue.use(VueRouter)
 
 export default Vue.extend({
   name: 'App',

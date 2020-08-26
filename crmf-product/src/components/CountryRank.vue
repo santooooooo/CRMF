@@ -2,7 +2,7 @@
 	<div class="topTen">
 
 		<select v-model="genre" @click="showData">
-			<option value="NewConfirmed">NewConfirmed</option>
+			<option value="NewConfirmed" selected>NewConfirmed</option>
 			<option value="NewDeaths">NewDeaths</option>
 			<option value="NewRecovered">NewRecovered</option>
 			<option value="TotalConfirmed">TotalConfirmed</option>
@@ -10,7 +10,7 @@
 			<option value="TotalRecovered">TotalRecovered</option>
 		</select>
 
-		<div>
+		<div v-if="dataArray.length != 0">
 			{{ dataArray }}
 		</div>
 
@@ -30,7 +30,7 @@ export default Vue.extend({
 	},
 	mounted () {
 		this.axios.get('https://api.covid19api.com/summary', {
-		headers: { 'x-access-token': `` }
+		headers: { 'x-access-token': `fe31d8e4-04d5-4c22-bbc8-05ac57330264` }
 		})
 		.then((response) => {
 			this.CountryData = response.data.Countries
@@ -54,11 +54,6 @@ export default Vue.extend({
 				}
 			}
 			return genreData(this.genre)
-		}
-	},
-	computed: {
-		displayData () : any[] {
-			return this.dataArray
 		}
 	}
 })

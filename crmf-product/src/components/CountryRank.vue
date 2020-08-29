@@ -11,7 +11,13 @@
 		</select>
 
 		<div v-if="dataArray.length != 0">
-			{{ dataArray }}
+			<div v-for="data in dataArray" :key="data.country">
+				<router-link :to="{ path: '/country/' + data.country }">
+					{{ data.country }}
+					{{ data.value }}
+					{{ data.date }}
+				</router-link>
+			</div>
 		</div>
 
 	</div>

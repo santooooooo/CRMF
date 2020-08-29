@@ -4,7 +4,11 @@
 		<input type="text" v-model="keyword" @keyup.enter ="result">
 
 		<div v-if="resultData.length != 0">
-			{{ resultData }}
+			<div v-for="result in resultData" :key="result">
+				<router-link :to="{ path: '/country/' + result }">
+					{{ result }}
+				</router-link>
+			</div>
 		</div>
 	</div>
 </template>

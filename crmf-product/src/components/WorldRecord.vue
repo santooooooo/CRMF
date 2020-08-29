@@ -20,6 +20,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import CountryRank from './CountryRank.vue'
 import SearchData from './SearchData.vue'
+import CountryDetails from './CountryDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,10 @@ const router = new VueRouter({
 		{
 			path: '/search',
 			component: SearchData
+		},
+		{
+			path: '/country/:countryName',
+			component: CountryDetails
 		}
 	]
 })

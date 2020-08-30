@@ -36,7 +36,7 @@ export default Vue.extend({
 	},
 	mounted () {
 		this.axios.get('https://api.covid19api.com/summary', {
-		headers: { 'x-access-token': `fe31d8e4-04d5-4c22-bbc8-05ac57330264` }
+		headers: { 'x-access-token': `` }
 		})
 		.then((response) => {
 			this.CountryData = response.data.Countries

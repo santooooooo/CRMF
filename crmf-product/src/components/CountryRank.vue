@@ -31,7 +31,7 @@ export default Vue.extend({
 		return {
 			CountryData: [],
 			genre: String,
-			dataArray: []
+			dataArray: [] as any
 		}
 	},
 	mounted () {
@@ -48,15 +48,22 @@ export default Vue.extend({
 	methods: {
 		showData (): void {
 			const genreData = (key: any): void => {
+				interface resultType {
+					country: string;
+					value: number;
+					date: string;
+				}
+
 				const copyData: any[] = this.CountryData.slice().sort((a: any, b: any) => {
 					return a[key] - b[key]
 				}).reverse()
 				for (let i = 0; i < 10; i++) {
-					this.dataArray[i] = {
+					const result: resultType = {
 						country: copyData[i].Country,
 						value: copyData[i][key],
 						date: copyData[i].Date.slice(0, 10)
 					}
+					this.dataArray[i] = result
 				}
 			}
 			return genreData(this.genre)

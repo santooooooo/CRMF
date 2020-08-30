@@ -20,8 +20,8 @@ export default Vue.extend({
 	data () {
 		return {
 			countryData: [],
-			keyword: null,
-			resultData: []
+			keyword: '',
+			resultData: [] as any
 		}
 	},
 	mounted () {
@@ -38,10 +38,11 @@ export default Vue.extend({
 			this.resultData = []
 			let c: number = 0
 			for (let i = 0; i < this.countryData.length; i++) {
-				const country: String = this.countryData[i].Country.toLowerCase()
-				const key: String = this.keyword.toLowerCase()
-				if (country.indexOf(key) > -1) {
-					this.resultData[c] = this.countryData[i].Country
+				const country: any = this.countryData[i]
+				const key: string = this.keyword.toLowerCase()
+				if (country.Country.toLowerCase().indexOf(key) > -1) {
+					const countryName: string = country.Country
+					this.resultData[c] = countryName
 					c++
 				}
 			}

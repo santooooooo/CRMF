@@ -2,11 +2,13 @@
 	<div>
 		<h4>{{ countryName }}</h4>
 		{{ sixData }}
+		<Graph />
 	</div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import Graph from './Graph.vue'
 
 export default Vue.extend({
 	data: function () {
@@ -14,6 +16,9 @@ export default Vue.extend({
 			countryName: '',
 			countriesData: []
 		}
+	},
+	components: {
+		Graph
 	},
 	mounted () {
 		this.countryName = this.$route.params.countryName

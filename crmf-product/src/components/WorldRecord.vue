@@ -3,9 +3,13 @@
 		<h1>title</h1>
 		<p>This is world record section.</p>
 
-		<div v-for="data in globalData" :key="data.key">
-			{{ data.key }}
-			{{ data.value }}
+		<div class="worldRecord">
+			<p>NewConfirmed {{ globalData.NewConfirmed }}</p>
+			<p>TotalConfirmed {{ globalData.TotalConfirmed }}</p>
+			<p>NewDeaths {{ globalData.NewDeaths }}</p>
+			<p>TotalDeaths {{ globalData.TotalDeaths }}</p>
+			<p>NewRecovered {{ globalData.NewRecovered }}</p>
+			<p>TotalRecovered {{ globalData.TotalRecovered }}</p>
 		</div>
 
 		<router-link to="/rank">Rank</router-link>
@@ -50,30 +54,12 @@ data: function () {
 router: router,
 mounted: function (): void {
 		interface GlobalData {
-			one: {
-				key: string;
-				value: number;
-			},
-			two: {
-				key: string;
-				value: number;
-			},
-			three: {
-				key: string;
-				value: number;
-			},
-			four: {
-				key: string;
-				value: number;
-			},
-			five: {
-				key: string;
-				value: number;
-			},
-			six: {
-				key: string;
-				value: number;
-			}
+			NewConfirmed: number;
+			TotalConfirmed: number;
+			NewDeaths: number;
+			TotalDeaths: number;
+			NewRecovered: number;
+			TotalRecovered: number;
 		}
 
 		this.axios.get('https://api.covid19api.com/summary', {
@@ -81,32 +67,13 @@ mounted: function (): void {
 		})
 		.then((response) => {
 			const mainData: GlobalData = {
-				one: {
-					key: 'NewConfirmed',
-					value: response.data.Global.NewConfirmed
-				},
-				two: {
-					key: 'TotalConfirmed',
-					value: response.data.Global.TotalConfirmed
-				},
-				three: {
-					key: 'NewDeaths',
-					value: response.data.Global.NewDeaths
-				},
-				four: {
-					key: 'TotalDeaths',
-					value: response.data.Global.TotalDeaths
-				},
-				five: {
-					key: 'NewRecovered',
-					value: response.data.Global.NewRecovered
-				},
-				six: {
-					key: 'TotalRecovered',
-					value: response.data.Global.TotalRecovered
+					NewConfirmed: response.data.Global.NewConfirmed,
+					TotalConfirmed: response.data.Global.TotalConfirmed,
+					NewDeaths: response.data.Global.NewDeaths,
+					TotalDeaths: response.data.Global.TotalDeaths,
+					NewRecovered: response.data.Global.NewRecovered,
+					TotalRecovered: response.data.Global.TotalRecovered
 				}
-			}
-
 			this.globalData = mainData
 		})
 		.catch((e) => {

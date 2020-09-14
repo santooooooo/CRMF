@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+		<div class="header">
+			<img alt="Vue logo" src="./assets/CRMFLogo.png">
+			<h1>Corona Report Made by a Failure</h1>
+		</div>
     <WorldRecord />
   </div>
 </template>
@@ -20,10 +23,18 @@ export default Vue.extend({
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 5%;
+}
+
+.header {
+	display: flex;
+}
+.header img {
+	width: 10%;
+}
+.header h1 {
+	margin: 40px 0 0 2%;
+	color: pink;
 }
 </style>

@@ -1,19 +1,20 @@
 <template>
 	<div class="graph">
+	<p>Select a genre and a term</p>
+	<p>*Active cases = total cases - total recovered - total deaths.</p>
 	<form>
 		<select v-model="genre" required>
 				<option value="Confirmed" selected>Confirmed</option>
 				<option value="Deaths">Deaths</option>
 				<option value="Recovered">Recovered</option>
 				<option value="Active">Active</option>
-				<option value="AllStatus">All Status</option>
+				<option value="AllStatus">Confirmed, Deaths, Recovered</option>
 		</select>
-
 		<input type="date" v-model="start" required>
 		<input type="date" v-model="end" required>
-		<button @click="showGraph">push</button>
+		<button @click="showGraph">Show graphs</button>
 	</form>
-		<canvas id="graph"></canvas>
+	<canvas id="graph"></canvas>
 	</div>
 </template>
 
@@ -32,9 +33,7 @@ export default Vue.extend({
 	},
 	mounted () {
 		const api: string = 'https://api.covid19api.com/total/dayone/country/' + this.$route.params.countryName
-		this.axios.get(api, {
-			headers: { 'x-access-token': `` }
-		})
+		this.axios.get(api)
 		.then((response) => {
 			this.countryData = response.data
 		})
@@ -265,3 +264,20 @@ export default Vue.extend({
 	}
 })
 </script>
+
+<style scoped>
+.graph {
+	margin: 1.0rem 0;
+}
+.graph select,.graph input, .graph button {
+	background: rgba(98, 137, 164, 0.5);
+	color: white;
+	margin: 1.0rem 1.0rem;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
+}
+
+canvas {
+	width: 100%;
+}
+</style>

@@ -3,7 +3,7 @@
 		<div class="top-text">
 			<p>This website give you data about corona virus of countries around the world.</p>
 			<p>The API I uses in it is <a href="https://covid19api.com" target=_blank>COVID 19 API</a>.</p>
-			<p>Data from the API are not always true so I hope that you use it with other data or website.</p>
+			<p>Data from the API are not always true so I hope that you compare it with other data or website.</p>
 			<p>They sometimes don't reach it so please reload it after minutes when you can't see them.</p>
 		</div>
 

@@ -10,7 +10,9 @@
 				<option value="Active">Active</option>
 				<option value="AllStatus">Confirmed, Deaths, Recovered</option>
 		</select>
+		start date
 		<input type="date" v-model="start" required>
+		end date
 		<input type="date" v-model="end" required>
 		<button @click="showGraph">Show graphs</button>
 	</form>
@@ -252,8 +254,9 @@ export default Vue.extend({
 				const hasend: string = firstData.dataArray[firstData.dataArray.length - 1].Date.slice(0, 10)
 				return alert('The term of ' + this.$route.params.countryName + '`s data is from ' + hasStart + ' to ' + hasend +
 				' but the data you required is out of it.Please request data in it.')
-			} else if (firstData.start >= firstData.end) {
-				return alert('Cannot set start later than end.')
+			}
+			if (firstData.start >= firstData.end) {
+				return alert('Cannot set a start date later than an end date.')
 			}
 
 			const secondData: any = this.genre !== 'AllStatus' ? outPutData(firstData.dataArray, firstData.start, firstData.end, this.genre)

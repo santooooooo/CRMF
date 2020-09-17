@@ -223,14 +223,14 @@ export default Vue.extend({
 							}, {
 								label: 'Deaths',
 								data: graphDeaths,
-								backgroundColor: 'rgba(200, 99, 100, 0.2)',
-								borderColor: 'rgba(255, 99, 132, 1)',
+								backgroundColor: 'rgba(255, 191, 108, 0.2)',
+								borderColor: 'rgba(255, 191, 108, 1)',
 								borderWidth: 1
 							}, {
 								label: 'Recovered',
 								data: graphRecovered,
-								backgroundColor: 'rgba(100, 99, 132, 0.2)',
-								borderColor: 'rgba(255, 99, 132, 1)',
+								backgroundColor: 'rgba(122, 185, 119, 0.2)',
+								borderColor: 'rgba(122, 185, 119, 1)',
 								borderWidth: 1
 							}]
 						},

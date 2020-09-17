@@ -45,10 +45,6 @@ export default Vue.extend({
 	},
 	methods: {
 		showGraph (): void {
-			if (this.genre === '' || this.start === '' || this.end === '') {
-				return alert('Please answer all questions(genre, start, end).')
-			}
-
 			const getData = (countryData: any[]): object => {
 				let startNum: number = -1
 				let endNum: number = -1
@@ -100,26 +96,25 @@ export default Vue.extend({
 						dataInGenre.value[c - start] = dataSet.value
 						dataInGenre.date[c - start] = dataSet.date
 					}
-				} else {
-					for (let c = start; c <= end; c++) {
-						if (c === 0) {
-							const dataSet: dataSetType = {
-								value: countryData[c][genre],
-								date: countryData[c].Date
-							}
-							dataInGenre.value[c - start] = dataSet.value
-							dataInGenre.date[c - start] = dataSet.date
-						} else {
-							const dataSet: dataSetType = {
-								value: countryData[c][genre] - countryData[c - 1][genre],
-								date: countryData[c].Date
-							}
-							dataInGenre.value[c - start] = dataSet.value
-							dataInGenre.date[c - start] = dataSet.date
+					return dataInGenre
+				}
+				for (let c = start; c <= end; c++) {
+					if (c === 0) {
+						const dataSet: dataSetType = {
+							value: countryData[c][genre],
+							date: countryData[c].Date
 						}
+						dataInGenre.value[c - start] = dataSet.value
+						dataInGenre.date[c - start] = dataSet.date
+					} else {
+						const dataSet: dataSetType = {
+							value: countryData[c][genre] - countryData[c - 1][genre],
+							date: countryData[c].Date
+						}
+						dataInGenre.value[c - start] = dataSet.value
+						dataInGenre.date[c - start] = dataSet.date
 					}
 				}
-
 				return dataInGenre
 			}
 
@@ -249,17 +244,22 @@ export default Vue.extend({
 
 			const firstData: any = getData(this.countryData)
 
+			if (this.genre === '' || this.start === '' || this.end === '') {
+				return alert('Please answer all questions(genre, start, end).')
+			}
+
 			if (firstData.start === -1 || firstData.end === -1) {
 				const hasStart: string = firstData.dataArray[0].Date.slice(0, 10)
 				const hasend: string = firstData.dataArray[firstData.dataArray.length - 1].Date.slice(0, 10)
-				return alert('The term of ' + this.$route.params.countryName + '`s data is from ' + hasStart + ' to ' + hasend +
-				' but the data you required is out of it.Please request data in it.')
+				return alert('The term of ' + this.$route.params.countryName + '`s data is from ' + hasStart +
+				' to ' + hasend + ' but the data you required is out of it.Please request data in it.')
 			}
 			if (firstData.start >= firstData.end) {
 				return alert('Cannot set a start date later than an end date.')
 			}
 
-			const secondData: any = this.genre !== 'AllStatus' ? outPutData(firstData.dataArray, firstData.start, firstData.end, this.genre)
+			const secondData: any = this.genre !== 'AllStatus'
+			? outPutData(firstData.dataArray, firstData.start, firstData.end, this.genre)
 			: outPutDataForAll(firstData.dataArray, firstData.start, firstData.end)
 
 			return graph(this.genre, secondData)

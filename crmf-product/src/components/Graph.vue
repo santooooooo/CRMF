@@ -86,7 +86,6 @@ export default Vue.extend({
 					value: number;
 					date: string;
 				}
-
 				if (genre === 'Active') {
 					for (let c = start; c <= end; c++) {
 						const dataSet: dataSetType = {
@@ -162,23 +161,15 @@ export default Vue.extend({
 					return dataInGenre
 				}
 
-			const graph = (genre: string, graphObject: any):void => {
-				if (!graphObject.confirmed) {
-					const graphDate: any[] = graphObject.date
-					const graphValue: any[] = graphObject.value
-					const ctx: any = document.getElementById('graph')
-					const windowObject: any = window
-					if (windowObject.myChart) {
-						windowObject.myChart.destroy()
-					}
-
-					windowObject.myChart = new Chart(ctx, {
+			const graph = (genre: string, graphObject: any): any => {
+				const singleChart = (graphElement: any, graphLabel: string[], graphGenre: string, graphData: number[]) => {
+					return new Chart(graphElement, {
 						type: 'line',
 						data: {
-							labels: graphDate,
+							labels: graphLabel,
 							datasets: [{
-								label: genre,
-								data: graphValue,
+								label: graphGenre,
+								data: graphData,
 								backgroundColor: 'rgba(255, 99, 132, 0.2)',
 								borderColor: 'rgba(255, 99, 132, 1)',
 								borderWidth: 1
@@ -194,36 +185,27 @@ export default Vue.extend({
 							}
 						}
 					})
-				} else {
-					const graphDate: any[] = graphObject.date
-					const graphConfirmed: any[] = graphObject.confirmed
-					const graphDeaths: any[] = graphObject.deaths
-					const graphRecovered: any[] = graphObject.recovered
-					const ctx: any = document.getElementById('graph')
-					const windowObject: any = window
-					if (windowObject.myChart) {
-						windowObject.myChart.destroy()
-					}
-
-					windowObject.myChart = new Chart(ctx, {
+				}
+				const tripleChart = (graphElement: any, graphLabels: string[], confirmed: number[], deaths: number[], recovered: number[]) => {
+					return new Chart(graphElement, {
 						type: 'line',
 						data: {
-							labels: graphDate,
+							labels: graphLabels,
 							datasets: [{
 								label: 'Confirmed',
-								data: graphConfirmed,
+								data: confirmed,
 								backgroundColor: 'rgba(255, 99, 132, 0.2)',
 								borderColor: 'rgba(255, 99, 132, 1)',
 								borderWidth: 1
 							}, {
 								label: 'Deaths',
-								data: graphDeaths,
+								data: deaths,
 								backgroundColor: 'rgba(255, 191, 108, 0.2)',
 								borderColor: 'rgba(255, 191, 108, 1)',
 								borderWidth: 1
 							}, {
 								label: 'Recovered',
-								data: graphRecovered,
+								data: recovered,
 								backgroundColor: 'rgba(122, 185, 119, 0.2)',
 								borderColor: 'rgba(122, 185, 119, 1)',
 								borderWidth: 1
@@ -240,14 +222,28 @@ export default Vue.extend({
 						}
 					})
 				}
+				const windowObject: any = window
+				if (windowObject.myChart) {
+					windowObject.myChart.destroy()
+				}
+				const graphDate: string[] = graphObject.date
+				const ctx: any = document.getElementById('graph')
+				if (!graphObject.confirmed) {
+					const graphValue: number[] = graphObject.value
+					windowObject.myChart = singleChart(ctx, graphDate, genre, graphValue)
+					return null
+				}
+				const graphConfirmed: number[] = graphObject.confirmed
+				const graphDeaths: number[] = graphObject.deaths
+				const graphRecovered: number[] = graphObject.recovered
+				windowObject.myChart = tripleChart(ctx, graphDate, graphConfirmed, graphDeaths, graphRecovered)
+				return null
 			}
 
 			const firstData: any = getData(this.countryData)
-
 			if (this.genre === '' || this.start === '' || this.end === '') {
 				return alert('Please answer all questions(genre, start, end).')
 			}
-
 			if (firstData.start === -1 || firstData.end === -1) {
 				const hasStart: string = firstData.dataArray[0].Date.slice(0, 10)
 				const hasend: string = firstData.dataArray[firstData.dataArray.length - 1].Date.slice(0, 10)
@@ -257,11 +253,9 @@ export default Vue.extend({
 			if (firstData.start >= firstData.end) {
 				return alert('Cannot set a start date later than an end date.')
 			}
-
 			const secondData: any = this.genre !== 'AllStatus'
 			? outPutData(firstData.dataArray, firstData.start, firstData.end, this.genre)
 			: outPutDataForAll(firstData.dataArray, firstData.start, firstData.end)
-
 			return graph(this.genre, secondData)
 		}
 	}
